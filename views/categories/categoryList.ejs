@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories | Gamers</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <img src="/images/watermelon.png">
+        <span>Gamers</span>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/items">Products</a>
+        <a href="/categories">Categories</a>
+    </nav>
+
+    <div class="search">
+        <input type="text" placeholder="Search products...">
+        <button>Search</button>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="category-header">
+        <h1>categories</h1>
+        <a href="/categories/create" class="add-btn">Add a Category</a>
+    </div>
+
+    <div class="category-grid">
+        <% categories.forEach(category => { %>
+            <a href="/categories/<%= category.genre_id %>"
+               class="category-card"
+               style="background: <%= category.color || '#cccccc' %>;">
+                <%= category.genre_name %>
+            </a>
+        <% }) %>
+    </div>
+
+</main>
+
+
+</body>
+</html>
