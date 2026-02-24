@@ -1,10 +1,11 @@
 const express = require("express");
-const {urlencoded} = require("express");
+
 
 const app = express();
 
 const indexRouter = require("./router/index")
-const categoryRouter = require("./router/categoryRoutes");
+const {router:categoryRouter} = require("./router/categoryRoutes");
+const itemRouter = require("./router/itemRoutes");
 
 app.set("view engine" , "ejs");
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/" , indexRouter);
 app.use("/categories" , categoryRouter);
+app.use("/items" , itemRouter);
 
 app.listen(3000 , (err) => {
     if(err)

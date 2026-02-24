@@ -36,3 +36,5 @@ ALTER TABLE game
 ALTER TABLE game
     ALTER COLUMN game_name TYPE TEXT;
 
+alter table game
+add column game_price float not null;

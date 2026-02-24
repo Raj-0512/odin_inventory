@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Games</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <img src="/images/watermelon.png">
+        <span>Gamer</span>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/items">Products</a>
+        <a href="/categories">Categories</a>
+    </nav>
+
+    <div class="search">
+        <input placeholder="Search products...">
+        <button>Search</button>
+    </div>
+</header>
+
+
+<main class="wrapper">
+
+    <div class="title-row">
+        <h1>Games</h1>
+        <a href="items/new" class="add-btn">Add a game</a>
+    </div>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <h4>Sort By Price:</h4>
+            <label><input type="radio"> Ascending</label>
+            <label><input type="radio"> Descending</label>
+
+            <h4>Sort By Name:</h4>
+            <label><input type="radio"> Ascending</label>
+            <label><input type="radio"> Descending</label>
+
+            <h4>Filter By Category:</h4>
+
+            <% categories.forEach(cat => { %>
+                <label class="cat-label">
+                    <input type="checkbox">
+                    <span style="background:<%= cat.color %>">
+                    <%= cat.genre_name %>
+                </span>
+                </label>
+            <% }) %>
+
+            <button class="apply-btn">Apply Filters</button>
+
+        </aside>
+
+
+        <section class="products">
+
+            <% game.forEach(game => { %>
+
+                <a href="/items/<%= game.game_id %>" class="card-link">
+
+                    <div class="card">
+
+                        <img src="<%= game.src %>" class="product-img">
+
+                        <div class="info">
+
+                            <div class="name-price">
+                                <p><%= game.game_name %></p>
+                                <p>$<%= game.game_price %></p>
+                            </div>
+
+                            <p class="meta">Platform: <%= game.platform_name %></p>
+                            <p class="meta">Quantity: <%= game.quantity %></p>
+
+                            <span
+                                    class="pill"
+                                    style="background:<%= game.color %>;
+                                            color:<%= game.fontColor %>;">
+                            <%= game.genre_name %>
+                        </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            <% }) %>
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+</html>

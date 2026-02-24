@@ -16,12 +16,18 @@ router.get("/" , async (req,res) =>{
     }
 })
 
+router.get("/new" , async (req,res)=>{
+    res.render("categories/categoryForm");
+})
+
 async function getCategories()
 {
-    const result = await pool.query("Select * from genre");
+    const result = await pool.query(
+        `Select * from genre`
+    );
     return result.rows;
 }
 
 
 
-module.exports = router;
+module.exports = {router , getCategories};
