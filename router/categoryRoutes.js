@@ -20,6 +20,23 @@ router.get("/new" , async (req,res)=>{
     res.render("categories/categoryForm");
 })
 
+router.post("/new" , async (req,res)=>{
+    try
+    {
+        const {category} = req.body;
+        await pool.query(
+            `insert into genre(genre_name)
+             values ($1)`,[category]
+        );
+        res.redirect("/categories");
+    }
+    catch(err)
+    {
+        console.error(err)
+        res.status(500).send("Database Error");
+    }
+})
+
 async function getCategories()
 {
     const result = await pool.query(
