@@ -36,6 +36,50 @@ router.get("/new" , async (req,res) =>{
     }
 })
 
+router.post("/new" , async(req,res)=>{
+    const client = await pool.connect();
+
+    try
+    {
+        const {game_name , price , quantity , platform , description , category} = req.body;
+
+        await client.query("Begin");
+
+        const platformId = await client.query(
+            `Select platform_id from platform
+             where platform_name = $1`,[platform]
+        );
+
+        const genreId = await client.query(
+            `Select genre_id from genre
+             where genre_name = $1`,[category]
+        );
+
+        const gameRes = await client.query(
+            `insert into game(game_name,game_price,description,platform_id,genre_id)
+             values ($1,$2,$3,$4,$5)
+             returning game_id`,[game_name,price,description,platformId.rows[0].platform_id,genreId.rows[0].genre_id]
+        );
+
+        await client.query(
+            `insert into inventory(game_id,quantity)
+             values ($1,$2)`,[gameRes.rows[0].game_id,quantity]
+        );
+
+        await client.query("Commit");
+        res.redirect("/items")
+    }
+    catch(err)
+    {
+        await client.query("ROLLBACK");
+        console.error(err);
+        res.status(500).send("Database error");
+    }
+    finally {
+        client.release();
+    }
+});
+
 router.get("/:id" , async (req,res)=>{
     try
     {
